@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Photo } from '../../App';
 
@@ -41,11 +41,11 @@ const ImageSize = styled.h5`
 
 type RecentlyAddedPropsTypes = {
   data: Photo[];
+  selectedImage: Photo | undefined;
+  setSelectedImage: (d: Photo) => void;
 };
 
-export function RecentlyAdded({ data }: RecentlyAddedPropsTypes) {
-  const [selectedImage, setSelectedImage] = useState<Photo | undefined>(undefined);
-
+export function RecentlyAdded({ data, selectedImage, setSelectedImage }: RecentlyAddedPropsTypes) {
   const sortedData = data.sort(
     (a: Photo, b: Photo) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
   );

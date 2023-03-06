@@ -17,12 +17,13 @@ const ImageCard = styled.div`
   margin: 0 4rem 2rem 0;
 `;
 
-const Images = styled.img`
+const Images = styled.img<{ selected: boolean }>`
   border-radius: 10px;
   width: 120px;
   height: 90px;
   margin-bottom: 0;
   padding: 0.1rem;
+  border: ${(props) => (props.selected ? 'cornflowerblue 2px solid' : 'none')};
 `;
 
 const ImageTitle = styled.h5`
@@ -40,9 +41,11 @@ const ImageSize = styled.h5`
 
 type FavoritedTypes = {
   data: Photo[];
+  selectedImage: Photo | undefined;
+  setSelectedImage: (d: Photo) => void;
 };
 
-export function Favorited({ data }: FavoritedTypes) {
+export function Favorited({ data, selectedImage, setSelectedImage }: FavoritedTypes) {
   return (
     <>
       <ImagesContainer>
@@ -51,7 +54,12 @@ export function Favorited({ data }: FavoritedTypes) {
             .filter((d) => d.favorited)
             .map((d: Photo) => (
               <ImageCard key={d.id}>
-                <Images src={d.url} alt="images" />
+                <Images
+                  src={d.url}
+                  alt="images"
+                  selected={selectedImage && selectedImage.id === d.id}
+                  onClick={() => setSelectedImage(d)}
+                />
                 <ImageTitle>{d.filename}</ImageTitle>
                 <ImageSize>{(d.sizeInBytes / 1024 ** 2).toFixed(1)} MB</ImageSize>
               </ImageCard>
