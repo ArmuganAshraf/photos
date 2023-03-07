@@ -1,5 +1,5 @@
 import React from 'react';
-import { Photo } from '../../App';
+import type { Photo } from '../../types/photo';
 import styled from 'styled-components';
 import { convertByteToMB } from '../../Utils/utils';
 

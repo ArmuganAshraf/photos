@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { RecentlyAdded } from './components/RecentlyAdded/RecentlyAdded';
 import styled from 'styled-components';
-import { useFetch } from './components/RecentlyAdded/FetchData';
+import { useFetch } from './hooks/useFetch';
 import { Favorited } from './components/Favorited/Favorited';
 import { ImageDetails } from './components/RecentlyAdded/ImageDetails';
+import { Tabs } from './components/Tabs';
+import type { Photo } from './types/photo';
+import type { Tab } from './types/tab';
 
 const Page = styled.div`
   background-color: #e8effa;
@@ -21,47 +24,26 @@ const Container = styled.div`
 `;
 
 const PhotosSection = styled.div`
-  width: 60%;
+  width: 100%;
 `;
-
-const TabsContainer = styled.div`
-  border-bottom: 1px solid lightgrey;
-  width: 95%;
-`;
-
-const Tabs = styled.button<{ selected: boolean }>`
-  border: none;
-  background-color: #e8effa;
-  padding: 0 2rem 1rem 0;
-  border-bottom: ${(props) => (props.selected ? 'cornflowerblue 2px solid' : 'none')};
-`;
-
-export interface Photo {
-  id: string;
-  url: string;
-  filename: string;
-  description: string;
-  createdAt: string;
-  updatedAt: string;
-  uploadedBy: string;
-  dimensions: {
-    height: number;
-    width: number;
-  };
-  resolution: {
-    height: number;
-    width: number;
-  };
-  sizeInBytes: number;
-  sharedWith: [];
-  favorited: boolean;
-}
 
 function App() {
   const url = 'https://agencyanalytics-api.vercel.app/images.json';
   const { data, loading, error } = useFetch(url);
+  const listOfTabs: Tab[] = [
+    {
+      id: 'RecentlyAdded',
+      label: 'Recently Added',
+      selected: true,
+    },
+    {
+      id: 'Favorited',
+      label: 'Favorited',
+      selected: false,
+    },
+  ];
   const [images, setImages] = useState<Photo[] | undefined>(undefined);
-  const [selectedTab, setSelectedTab] = useState('RecentlyAdded');
+  const [selectedTab, setSelectedTab] = useState<string>(listOfTabs[0].id);
   const [selectedImage, setSelectedImage] = useState<Photo | undefined>(undefined);
 
   const toggleFavorite = () => {
@@ -85,7 +67,6 @@ function App() {
     return <div>Loading...</div>;
   }
 
-  console.log(images);
   return (
     <Page>
       <MainContainer>
@@ -94,14 +75,7 @@ function App() {
           <Container>
             <PhotosSection>
               <h1>Photos</h1>
-              <TabsContainer>
-                <Tabs onClick={() => setSelectedTab('RecentlyAdded')} selected={selectedTab === 'RecentlyAdded'}>
-                  Recently Added
-                </Tabs>
-                <Tabs onClick={() => setSelectedTab('Favorited')} selected={selectedTab === 'Favorited'}>
-                  Favorited
-                </Tabs>
-              </TabsContainer>
+              <Tabs tabs={listOfTabs} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
               {selectedTab === 'RecentlyAdded' ? (
                 <RecentlyAdded data={images} selectedImage={selectedImage} setSelectedImage={setSelectedImage} />
               ) : (

@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import favoriteNotSelectedIcon from './FavoritedNotSelected.png';
-import favoriteSelectedIcon from './FavoritedSelected.png';
-import { Photo } from '../../App';
+import favoriteNotSelectedIcon from '../../assets/FavoritedNotSelected.png';
+import favoriteSelectedIcon from '../../assets/FavoritedSelected.png';
+import type { Photo } from '../../types/photo';
 import { convertByteToMB, formatDate } from '../../Utils/utils';
 
 const DetailsContainer = styled.div`

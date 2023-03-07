@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Photo } from '../../App';
+import type { Photo } from '../../types/photo';
 import { convertByteToMB } from '../../Utils/utils';
 
 const ImagesContainer = styled.div`
