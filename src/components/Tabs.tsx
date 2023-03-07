@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { ImageContext } from '../context/imageContext';
 
 import { Tab } from '../types/Tab';
 
@@ -17,15 +18,20 @@ const TabButton = styled.button<{ selected: boolean }>`
 
 type TabsPropsTypes = {
   tabs: Tab[];
-  selectedTab: string;
-  setSelectedTab: (tab: string) => void;
 };
 
-export function Tabs({ tabs, selectedTab, setSelectedTab }: TabsPropsTypes) {
+export function Tabs({ tabs }: TabsPropsTypes) {
+  const { selectedTab, setSelectedTab, setSelectedImage } = useContext(ImageContext);
+
+  const onTabChanged = (id: string) => {
+    setSelectedImage(undefined);
+    setSelectedTab(id);
+  };
+
   return (
     <TabsContainer>
       {tabs.map((tab) => (
-        <TabButton selected={selectedTab === tab.id} key={tab.id} onClick={() => setSelectedTab(tab.id)}>
+        <TabButton selected={selectedTab === tab.id} key={tab.id} onClick={() => onTabChanged(tab.id)}>
           {tab.label}
         </TabButton>
       ))}

@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { RecentlyAdded } from './RecentlyAdded';
-import { Favorited } from './Favorited';
 import { ImageDetails } from './ImageDetails';
 
 import { Tabs } from '../components/Tabs';
 
-import type { Photo } from '../types/Photo';
+import type { Image } from '../types/Image';
 import type { Tab } from '../types/Tab';
+
+import { TAB_IDS } from '../types/TabIds';
+import { ImageGridWrapper } from './ImageGridWrapper';
+import { ImageContext } from '../context/imageContext';
 
 const Container = styled.div`
   display: flex;
@@ -20,58 +22,46 @@ const PhotosSection = styled.div`
 `;
 
 type PhotosWrapperPropsTypes = {
-  data: Photo[];
+  data: Image[];
 };
 
 export function PhotosWrapper({ data: imageData }: PhotosWrapperPropsTypes) {
   const listOfTabs: Tab[] = [
     {
-      id: 'RecentlyAdded',
+      id: TAB_IDS.RecentlyAdded,
       label: 'Recently Added',
       selected: true,
     },
     {
-      id: 'Favorited',
+      id: TAB_IDS.Favorited,
       label: 'Favorited',
       selected: false,
     },
   ];
 
   const [selectedTab, setSelectedTab] = useState<string>(listOfTabs[0].id);
-  const [selectedImage, setSelectedImage] = useState<Photo | undefined>(undefined);
-  const [images, setImages] = useState<Photo[]>(imageData);
-
-  const toggleFavorite = () => {
-    const updatedImages = [...images];
-    const favoritedImage = updatedImages.find((d: Photo) => d.id === selectedImage.id);
-    favoritedImage.favorited = !favoritedImage.favorited;
-    setImages(updatedImages);
-  };
-
-  const deleteSelectedImage = () => {
-    const updatedImages = images.filter((d: Photo) => d.id !== selectedImage.id);
-    setImages(updatedImages);
-    setSelectedImage(undefined);
-  };
+  const [clickedImage, setClickedImage] = useState<Image | undefined>(undefined);
+  const [images, setImages] = useState<Image[]>(imageData);
 
   return (
-    <Container>
-      <PhotosSection>
-        <h1>Photos</h1>
-        <Tabs tabs={listOfTabs} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-        {selectedTab === 'RecentlyAdded' ? (
-          <RecentlyAdded data={images} selectedImage={selectedImage} setSelectedImage={setSelectedImage} />
-        ) : (
-          <Favorited data={images} selectedImage={selectedImage} setSelectedImage={setSelectedImage} />
-        )}
-      </PhotosSection>
-      {selectedImage && (
-        <ImageDetails
-          selectedImage={selectedImage}
-          toggleFavorite={toggleFavorite}
-          deleteSelectedImage={deleteSelectedImage}
-        />
-      )}
-    </Container>
+    <ImageContext.Provider
+      value={{
+        images: images,
+        setImages: setImages,
+        selectedImage: clickedImage,
+        setSelectedImage: setClickedImage,
+        selectedTab: selectedTab,
+        setSelectedTab: setSelectedTab,
+      }}
+    >
+      <Container>
+        <PhotosSection>
+          <h1>Photos</h1>
+          <Tabs tabs={listOfTabs} />
+          <ImageGridWrapper />
+        </PhotosSection>
+        {clickedImage && <ImageDetails />}
+      </Container>
+    </ImageContext.Provider>
   );
 }

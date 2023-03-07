@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 
 import favoriteNotSelectedIcon from '../assets/FavoritedNotSelected.png';
 import favoriteSelectedIcon from '../assets/FavoritedSelected.png';
+import { ImageContext } from '../context/imageContext';
 
-import type { Photo } from '../types/Photo';
+import type { Image } from '../types/Image';
+import { TAB_IDS } from '../types/TabIds';
 
 import { convertByteToMB, formatDate } from '../utils/utils';
 
@@ -67,16 +69,11 @@ const Delete = styled.button`
   background-color: white;
 `;
 
-type ImageDetailsPropsTypes = {
-  selectedImage: Photo;
-  toggleFavorite: () => void;
-  deleteSelectedImage: () => void;
-};
-
-export function ImageDetails({ selectedImage, toggleFavorite, deleteSelectedImage }: ImageDetailsPropsTypes) {
-  console.log(selectedImage);
+export function ImageDetails() {
+  const { images, setImages, selectedImage, setSelectedImage, selectedTab } = useContext(ImageContext);
   const {
     url,
+    id,
     filename,
     sizeInBytes,
     createdAt,
@@ -88,6 +85,22 @@ export function ImageDetails({ selectedImage, toggleFavorite, deleteSelectedImag
     favorited,
   } = selectedImage;
 
+  const toggleFavorited = () => {
+    const updatedImages = [...images];
+    const favoritedImage = updatedImages.find((image: Image) => image.id === id);
+    favoritedImage.favorited = !favoritedImage.favorited;
+    setImages(updatedImages);
+    if (selectedTab === TAB_IDS.Favorited) {
+      setSelectedImage(undefined);
+    }
+  };
+
+  const deleteSelectedImage = () => {
+    const updatedImages = images.filter((image: Image) => image.id !== id);
+    setImages(updatedImages);
+    setSelectedImage(undefined);
+  };
+
   return (
     <DetailsContainer>
       <Image src={url} alt="details" />
@@ -97,7 +110,7 @@ export function ImageDetails({ selectedImage, toggleFavorite, deleteSelectedImag
           <FavoriteIcon
             src={favorited ? favoriteSelectedIcon : favoriteNotSelectedIcon}
             alt="heart icon"
-            onClick={() => toggleFavorite()}
+            onClick={() => toggleFavorited()}
           />
         </ImageBrife>
         <ImageSize>{convertByteToMB(sizeInBytes)} MB</ImageSize>
@@ -135,7 +148,7 @@ export function ImageDetails({ selectedImage, toggleFavorite, deleteSelectedImag
           <DescriptionDetails>{description}</DescriptionDetails>
         </DescriptionSection>
       )}
-      <Delete onClick={deleteSelectedImage}>Delete</Delete>
+      <Delete onClick={() => deleteSelectedImage()}>Delete</Delete>
     </DetailsContainer>
   );
 }
