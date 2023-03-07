@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import favoriteNotSelectedIcon from '../../assets/FavoritedNotSelected.png';
-import favoriteSelectedIcon from '../../assets/FavoritedSelected.png';
-import type { Photo } from '../../types/photo';
-import { convertByteToMB, formatDate } from '../../Utils/utils';
+
+import favoriteNotSelectedIcon from '../assets/FavoritedNotSelected.png';
+import favoriteSelectedIcon from '../assets/FavoritedSelected.png';
+
+import type { Photo } from '../types/Photo';
+
+import { convertByteToMB, formatDate } from '../utils/utils';
 
 const DetailsContainer = styled.div`
   max-width: 30%;

@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import type { Photo } from '../../types/photo';
-import { convertByteToMB } from '../../Utils/utils';
+
+import type { Photo } from '../types/Photo';
+
+import { convertByteToMB } from '../utils/utils';
 
 const ImagesContainer = styled.div`
   display: flex;
@@ -40,33 +42,31 @@ const ImageSize = styled.h5`
   margin-top: 5px;
 `;
 
-type RecentlyAddedPropsTypes = {
+type FavoritedTypes = {
   data: Photo[];
   selectedImage: Photo | undefined;
   setSelectedImage: (d: Photo) => void;
 };
 
-export function RecentlyAdded({ data, selectedImage, setSelectedImage }: RecentlyAddedPropsTypes) {
-  const sortedData = data.sort(
-    (a: Photo, b: Photo) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-  );
-
+export function Favorited({ data, selectedImage, setSelectedImage }: FavoritedTypes) {
   return (
     <>
       <ImagesContainer>
-        {sortedData &&
-          sortedData.map((d: Photo) => (
-            <ImageCard key={d.id}>
-              <Images
-                src={d.url}
-                alt="images"
-                selected={selectedImage && selectedImage.id === d.id}
-                onClick={() => setSelectedImage(d)}
-              />
-              <ImageTitle>{d.filename}</ImageTitle>
-              <ImageSize>{convertByteToMB(d.sizeInBytes)} MB</ImageSize>
-            </ImageCard>
-          ))}
+        {data &&
+          data
+            .filter((d) => d.favorited)
+            .map((d: Photo) => (
+              <ImageCard key={d.id}>
+                <Images
+                  src={d.url}
+                  alt="images"
+                  selected={selectedImage && selectedImage.id === d.id}
+                  onClick={() => setSelectedImage(d)}
+                />
+                <ImageTitle>{d.filename}</ImageTitle>
+                <ImageSize>{convertByteToMB(d.sizeInBytes)} MB</ImageSize>
+              </ImageCard>
+            ))}
       </ImagesContainer>
     </>
   );

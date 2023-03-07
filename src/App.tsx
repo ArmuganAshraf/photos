@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { RecentlyAdded } from './components/RecentlyAdded/RecentlyAdded';
 import styled from 'styled-components';
+
 import { useFetch } from './hooks/useFetch';
-import { Favorited } from './components/Favorited/Favorited';
-import { ImageDetails } from './components/RecentlyAdded/ImageDetails';
+
+import { RecentlyAdded } from './views/RecentlyAdded';
+import { Favorited } from './views/Favorited';
+import { ImageDetails } from './views/ImageDetails';
+
 import { Tabs } from './components/Tabs';
-import type { Photo } from './types/photo';
-import type { Tab } from './types/tab';
+
+import type { Photo } from './types/Photo';
+import type { Tab } from './types/Tab';
+import { Image_URL } from './config/config';
 
 const Page = styled.div`
   background-color: #e8effa;
@@ -28,7 +33,7 @@ const PhotosSection = styled.div`
 `;
 
 function App() {
-  const url = 'https://agencyanalytics-api.vercel.app/images.json';
+  const url = Image_URL;
   const { data, loading, error } = useFetch(url);
   const listOfTabs: Tab[] = [
     {
