@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Photo } from '../../App';
+import { convertByteToMB } from '../../Utils/utils';
 
 const ImagesContainer = styled.div`
   display: flex;
@@ -63,7 +64,7 @@ export function RecentlyAdded({ data, selectedImage, setSelectedImage }: Recentl
                 onClick={() => setSelectedImage(d)}
               />
               <ImageTitle>{d.filename}</ImageTitle>
-              <ImageSize>{(d.sizeInBytes / 1024 ** 2).toFixed(1)} MB</ImageSize>
+              <ImageSize>{convertByteToMB(d.sizeInBytes)} MB</ImageSize>
             </ImageCard>
           ))}
       </ImagesContainer>

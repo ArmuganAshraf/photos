@@ -1,6 +1,7 @@
 import React from 'react';
 import { Photo } from '../../App';
 import styled from 'styled-components';
+import { convertByteToMB } from '../../Utils/utils';
 
 const ImagesContainer = styled.div`
   display: flex;
@@ -61,7 +62,7 @@ export function Favorited({ data, selectedImage, setSelectedImage }: FavoritedTy
                   onClick={() => setSelectedImage(d)}
                 />
                 <ImageTitle>{d.filename}</ImageTitle>
-                <ImageSize>{(d.sizeInBytes / 1024 ** 2).toFixed(1)} MB</ImageSize>
+                <ImageSize>{convertByteToMB(d.sizeInBytes)} MB</ImageSize>
               </ImageCard>
             ))}
       </ImagesContainer>

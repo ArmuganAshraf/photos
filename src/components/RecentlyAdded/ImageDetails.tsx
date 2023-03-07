@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-//import testImage from './TestImage.jpeg';
 import favoriteNotSelectedIcon from './FavoritedNotSelected.png';
 import favoriteSelectedIcon from './FavoritedSelected.png';
 import { Photo } from '../../App';
+import { convertByteToMB, formatDate } from '../../Utils/utils';
 
 const DetailsContainer = styled.div`
   max-width: 30%;
@@ -97,7 +97,7 @@ export function ImageDetails({ selectedImage, toggleFavorite, deleteSelectedImag
             onClick={() => toggleFavorite()}
           />
         </ImageBrife>
-        <ImageSize>{sizeInBytes} MB</ImageSize>
+        <ImageSize>{convertByteToMB(sizeInBytes)} MB</ImageSize>
       </div>
       <div>
         <h3>Information</h3>
@@ -107,22 +107,22 @@ export function ImageDetails({ selectedImage, toggleFavorite, deleteSelectedImag
         </InfoDetails>
         <InfoDetails>
           <InfoTitle>Created</InfoTitle>
-          <p>{createdAt}</p>
+          <p>{formatDate(createdAt)}</p>
         </InfoDetails>
         <InfoDetails>
           <InfoTitle>Last Modified</InfoTitle>
-          <p>{updatedAt}</p>
+          <p>{formatDate(updatedAt)}</p>
         </InfoDetails>
         <InfoDetails>
           <InfoTitle>Dimensions</InfoTitle>
           <p>
-            {dimensions.height} x {dimensions.width}
+            {dimensions.width} x {dimensions.height}
           </p>
         </InfoDetails>
         <InfoDetails>
           <InfoTitle>Resolution</InfoTitle>
           <p>
-            {resolution.height} x {resolution.width}
+            {resolution.width} x {resolution.height}
           </p>
         </InfoDetails>
       </div>
