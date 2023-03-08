@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 
-import favoriteNotSelectedIcon from '../assets/FavoritedNotSelected.png';
-import favoriteSelectedIcon from '../assets/FavoritedSelected.png';
+import FavoriteNotSelectedIcon from '../assets/favorite_not_selected.svg';
+import FavoriteSelectedIcon from '../assets/favorite_selected.svg';
 import { ImageContext } from '../context/imageContext';
 
 import type { Image } from '../types/Image';
@@ -89,6 +89,7 @@ export function ImageDetails() {
     const updatedImages = [...images];
     const favoritedImage = updatedImages.find((image: Image) => image.id === id);
     favoritedImage.favorited = !favoritedImage.favorited;
+    setSelectedImage(favoritedImage);
     setImages(updatedImages);
     if (selectedTab === TAB_IDS.Favorited) {
       setSelectedImage(undefined);
@@ -101,15 +102,17 @@ export function ImageDetails() {
     setSelectedImage(undefined);
   };
 
+  console.log('selectedImage', selectedImage);
   return (
     <DetailsContainer>
-      <Image src={url} alt="details" />
+      <Image src={url} alt={filename} />
       <div>
         <ImageBrife>
           <p>{filename}</p>
           <FavoriteIcon
-            src={favorited ? favoriteSelectedIcon : favoriteNotSelectedIcon}
-            alt="heart icon"
+            src={favorited ? FavoriteSelectedIcon : FavoriteNotSelectedIcon}
+            alt={favorited ? 'favorited' : 'not favorited'}
+            data-testid={'heart-icon'}
             onClick={() => toggleFavorited()}
           />
         </ImageBrife>

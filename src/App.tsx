@@ -17,8 +17,7 @@ const MainContainer = styled.div`
 `;
 
 function App() {
-  const url = Image_URL;
-  const { data, loading, error } = useFetch(url);
+  const { data, loading, error } = useFetch(Image_URL);
 
   if (loading) {
     return <div>Loading...</div>;

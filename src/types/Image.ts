@@ -6,15 +6,14 @@ export interface Image {
   createdAt: string;
   updatedAt: string;
   uploadedBy: string;
-  dimensions: {
-    height: number;
-    width: number;
-  };
-  resolution: {
-    height: number;
-    width: number;
-  };
+  dimensions: ImageDimension;
+  resolution: ImageDimension;
   sizeInBytes: number;
   sharedWith: [];
   favorited: boolean;
+}
+
+export interface ImageDimension {
+  height: number;
+  width: number;
 }
