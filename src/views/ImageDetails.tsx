@@ -89,7 +89,6 @@ export function ImageDetails() {
     const updatedImages = [...images];
     const favoritedImage = updatedImages.find((image: Image) => image.id === id);
     favoritedImage.favorited = !favoritedImage.favorited;
-    setSelectedImage(favoritedImage);
     setImages(updatedImages);
     if (selectedTab === TAB_IDS.Favorited) {
       setSelectedImage(undefined);
@@ -102,7 +101,6 @@ export function ImageDetails() {
     setSelectedImage(undefined);
   };
 
-  console.log('selectedImage', selectedImage);
   return (
     <DetailsContainer>
       <Image src={url} alt={filename} />
