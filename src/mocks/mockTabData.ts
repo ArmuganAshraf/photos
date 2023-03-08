@@ -2,13 +2,13 @@ import { Tab } from '../types/Tab';
 
 export const listOfMockTabs: Tab[] = [
   {
-    id: '1',
-    label: 'New',
+    id: 'RECENTLYADDED',
+    label: 'Recently Addded',
     selected: true,
   },
   {
-    id: '2',
-    label: 'Old',
+    id: 'FAVORITED',
+    label: 'Favorited',
     selected: false,
   },
 ];

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import FavoriteNotSelectedIcon from '../assets/favorite_not_selected.svg';
 import FavoriteSelectedIcon from '../assets/favorite_selected.svg';
+import { ImageInformation } from '../components/ImageInformation';
 import { ImageContext } from '../context/imageContext';
 
 import type { Image } from '../types/Image';
@@ -26,7 +27,7 @@ const Image = styled.img`
   border-radius: 10px;
 `;
 
-const ImageBrife = styled.div`
+const ImageBrief = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: baseline;
@@ -39,17 +40,6 @@ const ImageSize = styled.div`
 const FavoriteIcon = styled.img`
   width: 5%;
   height: 5%;
-`;
-
-const InfoDetails = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  border-bottom: 1px solid lightgrey;
-`;
-
-const InfoTitle = styled.p`
-  color: grey;
 `;
 
 const DescriptionSection = styled.section`
@@ -105,7 +95,7 @@ export function ImageDetails() {
     <DetailsContainer>
       <Image src={url} alt={filename} />
       <div>
-        <ImageBrife>
+        <ImageBrief>
           <p>{filename}</p>
           <FavoriteIcon
             src={favorited ? FavoriteSelectedIcon : FavoriteNotSelectedIcon}
@@ -113,35 +103,16 @@ export function ImageDetails() {
             data-testid={'heart-icon'}
             onClick={() => toggleFavorited()}
           />
-        </ImageBrife>
+        </ImageBrief>
         <ImageSize>{convertByteToMB(sizeInBytes)} MB</ImageSize>
       </div>
       <div>
         <h3>Information</h3>
-        <InfoDetails>
-          <InfoTitle>Uploaded by</InfoTitle>
-          <p>{uploadedBy}</p>
-        </InfoDetails>
-        <InfoDetails>
-          <InfoTitle>Created</InfoTitle>
-          <p>{formatDate(createdAt)}</p>
-        </InfoDetails>
-        <InfoDetails>
-          <InfoTitle>Last Modified</InfoTitle>
-          <p>{formatDate(updatedAt)}</p>
-        </InfoDetails>
-        <InfoDetails>
-          <InfoTitle>Dimensions</InfoTitle>
-          <p>
-            {dimensions.width} x {dimensions.height}
-          </p>
-        </InfoDetails>
-        <InfoDetails>
-          <InfoTitle>Resolution</InfoTitle>
-          <p>
-            {resolution.width} x {resolution.height}
-          </p>
-        </InfoDetails>
+        <ImageInformation label="Uploaded by" value={uploadedBy} />
+        <ImageInformation label="Created" value={formatDate(createdAt)} />
+        <ImageInformation label="Last Modified" value={formatDate(updatedAt)} />
+        <ImageInformation label="Dimensions" value={`${dimensions.width} x ${dimensions.height}`} />
+        <ImageInformation label="Resolution" value={`${resolution.width} x ${resolution.height}`} />
       </div>
       {description && (
         <DescriptionSection>

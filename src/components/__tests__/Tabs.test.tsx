@@ -1,11 +1,11 @@
-import { render, screen } from '@testing-library/react';
-import React, { ReactElement } from 'react';
+import { screen } from '@testing-library/react';
+import React from 'react';
 
-import { ImageContext } from '../../context/imageContext';
 import { ImageContextType } from '../../types/ImageContextType';
 import userEvent from '@testing-library/user-event';
 import { listOfMockTabs } from '../../mocks/mockTabData';
 import { Tabs } from '../Tabs';
+import { initialContextValue, renderWithProviders } from '../../config/mockImageContext';
 
 describe('Tabs', () => {
   test('renders tabs', () => {
@@ -13,22 +13,29 @@ describe('Tabs', () => {
 
     const tabs = screen.getAllByRole('button');
 
-    expect(tabs.length).toEqual(2);
+    expect(tabs).toHaveLength(2);
   });
 
   test('set selected Tab', () => {
-    renderWithProviders(<Tabs tabs={listOfMockTabs} />);
+    const setSelectedImageMockFn = jest.fn();
+    const setSelectedTabMockFn = jest.fn();
+    const contextValue: ImageContextType = {
+      ...initialContextValue,
+      setSelectedImage: setSelectedImageMockFn,
+      setSelectedTab: setSelectedTabMockFn,
+    };
+    renderWithProviders(<Tabs tabs={listOfMockTabs} />, contextValue);
 
-    userEvent.click(screen.getByText('Old'));
+    userEvent.click(screen.getByText(/Favorited/));
 
-    expect(setSelectedTabMockFn).toHaveBeenCalledWith('2');
+    expect(setSelectedTabMockFn).toHaveBeenCalledWith('FAVORITED');
     expect(setSelectedImageMockFn).toHaveBeenCalledWith(undefined);
   });
 
   test('set border bottom for selected tab', () => {
     renderWithProviders(<Tabs tabs={listOfMockTabs} />);
 
-    const actualTab = screen.getByText('New');
+    const actualTab = screen.getByText(/Recently Addded/);
     expect(actualTab).toHaveStyle(`
       border-bottom: cornflowerblue 2px solid
     `);
@@ -37,27 +44,9 @@ describe('Tabs', () => {
   test('no border bottom for unselected tab', () => {
     renderWithProviders(<Tabs tabs={listOfMockTabs} />);
 
-    const actualTab = screen.getByText('Old');
+    const actualTab = screen.getByText(/Favorited/);
     expect(actualTab).toHaveStyle(`
       border-bottom: none
     `);
   });
 });
-
-const setSelectedTabMockFn = jest.fn();
-const setSelectedImageMockFn = jest.fn();
-
-const initialValue: ImageContextType = {
-  images: [],
-  setImages: jest.fn(),
-  selectedImage: null,
-  setSelectedImage: setSelectedImageMockFn,
-  selectedTab: '1',
-  setSelectedTab: setSelectedTabMockFn,
-};
-
-const renderWithProviders = (component: ReactElement, value: ImageContextType = initialValue) => {
-  const wrapper = ({ children }: any) => <ImageContext.Provider value={value}>{children}</ImageContext.Provider>;
-
-  return render(component, { wrapper: wrapper });
-};

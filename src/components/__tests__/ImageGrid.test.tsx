@@ -1,11 +1,12 @@
-import { render, screen } from '@testing-library/react';
-import React, { ReactElement } from 'react';
+import { screen } from '@testing-library/react';
+import React from 'react';
+
 import { ImageGrid } from '../ImageGrid';
 import { Image } from '../../types/Image';
-import { ImageContext } from '../../context/imageContext';
 import { ImageContextType } from '../../types/ImageContextType';
 import { mockImageData } from '../../mocks/mockImageData';
 import userEvent from '@testing-library/user-event';
+import { initialContextValue, renderWithProviders } from '../../config/mockImageContext';
 
 describe('ImageGrid', () => {
   test('renders list of images', async () => {
@@ -13,7 +14,7 @@ describe('ImageGrid', () => {
 
     const countImage = await screen.findAllByRole('img');
 
-    expect(countImage.length).toEqual(2);
+    expect(countImage).toHaveLength(2);
   });
 
   test('renders image size in MB', () => {
@@ -26,8 +27,13 @@ describe('ImageGrid', () => {
   });
 
   test('set selected Image', () => {
+    const setSelectedImageMockFn = jest.fn();
+    const contextValue: ImageContextType = {
+      ...initialContextValue,
+      setSelectedImage: setSelectedImageMockFn,
+    };
     const expectedImage: Image = mockImageData[1];
-    renderWithProviders(<ImageGrid images={mockImageData} />);
+    renderWithProviders(<ImageGrid images={mockImageData} />, contextValue);
 
     userEvent.click(screen.getByAltText(expectedImage.filename));
 
@@ -36,9 +42,11 @@ describe('ImageGrid', () => {
 
   test('set border for selected image', () => {
     const clickedImage: Image = mockImageData[0];
-    const value: ImageContextType = { ...initialValue, selectedImage: clickedImage };
-
-    renderWithProviders(<ImageGrid images={mockImageData} />, value);
+    const contextValue: ImageContextType = {
+      ...initialContextValue,
+      selectedImage: clickedImage,
+    };
+    renderWithProviders(<ImageGrid images={mockImageData} />, contextValue);
 
     const actualImage = screen.getByAltText(clickedImage.filename);
     expect(actualImage).toHaveStyle(`
@@ -49,9 +57,12 @@ describe('ImageGrid', () => {
   test('no border for unclicked image', () => {
     const unclickedImage: Image = mockImageData[0];
     const clickedImage: Image = mockImageData[1];
-    const value: ImageContextType = { ...initialValue, selectedImage: clickedImage };
 
-    renderWithProviders(<ImageGrid images={mockImageData} />, value);
+    const contextValue: ImageContextType = {
+      ...initialContextValue,
+      selectedImage: clickedImage,
+    };
+    renderWithProviders(<ImageGrid images={mockImageData} />, contextValue);
 
     const actualImage = screen.getByAltText(unclickedImage.filename);
     expect(actualImage).toHaveStyle(`
@@ -59,19 +70,3 @@ describe('ImageGrid', () => {
     `);
   });
 });
-
-const setSelectedImageMockFn = jest.fn();
-const initialValue: ImageContextType = {
-  images: [],
-  setImages: jest.fn(),
-  selectedImage: null,
-  setSelectedImage: setSelectedImageMockFn,
-  selectedTab: '',
-  setSelectedTab: jest.fn(),
-};
-
-const renderWithProviders = (component: ReactElement, value: ImageContextType = initialValue) => {
-  const wrapper = ({ children }: any) => <ImageContext.Provider value={value}>{children}</ImageContext.Provider>;
-
-  return render(component, { wrapper: wrapper });
-};

@@ -7,7 +7,7 @@ export const mockImageData: Image[] = [
     filename: 'file1.jpg',
     description: 'Laboriosam.',
     uploadedBy: 'John Doe',
-    createdAt: '2017-07-15T08:23:20.462Z',
+    createdAt: '2013-07-15T08:23:20.462Z',
     updatedAt: '2022-12-16T12:41:33.736Z',
     dimensions: {
       height: 4800,
