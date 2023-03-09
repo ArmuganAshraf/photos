@@ -11,6 +11,7 @@ import type { Tab } from '../types/Tab';
 import { TAB_IDS } from '../types/TabIds';
 import { ImageGridWrapper } from './ImageGridWrapper';
 import { ImageContext } from '../context/imageContext';
+import { devices } from '../utilities/devices';
 
 const Container = styled.div`
   display: flex;
@@ -20,9 +21,13 @@ const Container = styled.div`
 const Header = styled.h1`
   font-size: 22px;
   padding: 1rem 0;
+
+  @media ${devices.mobile} {
+    text-align: center;
+  }
 `;
 
-const PhotosSection = styled.div`
+const PhotosSection = styled.main`
   width: 100%;
 `;
 

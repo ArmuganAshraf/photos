@@ -5,7 +5,7 @@ import { ImageContext } from '../context/imageContext';
 import { Tab } from '../types/Tab';
 import { devices } from '../utilities/devices';
 
-const TabsContainer = styled.div`
+const TabsContainer = styled.nav`
   display: flex;
   border-bottom: 1px solid rgba(203, 213, 225, 0.5);
   width: 96%;

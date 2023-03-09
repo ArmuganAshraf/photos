@@ -20,7 +20,7 @@ const ImagesContainer = styled.div`
   }
 `;
 
-const ImageCard = styled.div`
+const ImageCard = styled.figure`
   width: 5.5rem;
   height: 7rem;
   font-size: 12px;
@@ -49,7 +49,7 @@ const Images = styled.img<{ selected: boolean }>`
   border: ${(props) => (props.selected ? 'cornflowerblue 2px solid' : 'none')};
 `;
 
-const ImageTitle = styled.h5`
+const ImageTitle = styled.figcaption`
   margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -57,7 +57,7 @@ const ImageTitle = styled.h5`
   min-width: 110px;
 `;
 
-const ImageSize = styled.h5`
+const ImageSize = styled.figcaption`
   color: #64748b;
   margin-top: 5px;
 `;

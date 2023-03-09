@@ -11,11 +11,17 @@ const Page = styled.div`
   background-color: #f7fafc;
   color: #1e293b;
   margin: 0;
+
+  @media ${devices.largeMonitor} {
+    height: 100vh;
+    overflow-y: scroll;
+  }
 `;
 
 const MainContainer = styled.div`
   display: flex;
   margin-left: 2rem;
+  background-size: auto;
 
   @media ${devices.mobile} {
     margin: 0;

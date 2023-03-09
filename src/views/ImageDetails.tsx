@@ -46,6 +46,12 @@ const DetailsContainer = styled.div`
   @media ${devices.tablet} {
     ${modalStyles}
   }
+
+  @media ${devices.largeMonitor} {
+    height: 100vh;
+    overflow-y: scroll;
+    width: 25%;
+  }
 `;
 
 const CloseButton = styled.button`
@@ -74,15 +80,17 @@ const Image = styled.img`
   }
 `;
 
-const ImageName = styled.p`
+const ImageName = styled.figcaption`
   font-size: 14px;
 `;
 
-const ImageBrief = styled.div`
+const ImageBrief = styled.figure`
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   width: 100%;
+  margin: 0;
+  padding: 0.5rem 0;
 `;
 
 const ImageSize = styled.div`
@@ -93,17 +101,27 @@ const FavoriteIcon = styled.img`
   height: 5%;
 `;
 
+const TableSection = styled.table`
+  font-size: 18px;
+  width: 100%;
+`;
+
+const TableCaption = styled.caption`
+  text-align: start;
+  border-bottom: 1px solid rgba(203, 213, 225, 0.5);
+  margin-top: 2.5rem;
+  padding-bottom: 1rem;
+`;
+
 const Section = styled.section`
-  font-size: 14px;
+  font-size: 18px;
   padding-top: 2.5rem;
 `;
 
-const DescriptionSection = styled.section`
-  margin-top: 2.5rem;
-`;
 const DescriptionDetails = styled.p`
   color: #64748b;
   text-align: left;
+  font-size: 14px;
   line-height: 22px;
 `;
 
@@ -168,19 +186,19 @@ export function ImageDetails() {
         </ImageBrief>
         <ImageSize>{convertByteToMB(sizeInBytes)} MB</ImageSize>
       </div>
-      <div>
-        <Section>Information</Section>
+      <TableSection>
+        <TableCaption>Information</TableCaption>
         <ImageInformation label="Uploaded by" value={uploadedBy} />
         <ImageInformation label="Created" value={formatDate(createdAt)} />
         <ImageInformation label="Last Modified" value={formatDate(updatedAt)} />
         <ImageInformation label="Dimensions" value={`${dimensions.width} x ${dimensions.height}`} />
         <ImageInformation label="Resolution" value={`${resolution.width} x ${resolution.height}`} />
-      </div>
+      </TableSection>
       {description && (
-        <DescriptionSection>
-          <h3>Description</h3>
+        <Section>
+          <p>Description</p>
           <DescriptionDetails>{description}</DescriptionDetails>
-        </DescriptionSection>
+        </Section>
       )}
       <Delete onClick={() => deleteSelectedImage()}>Delete</Delete>
     </DetailsContainer>
