@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import FavoriteNotSelectedIcon from '../assets/favorite_not_selected.svg';
 import FavoriteSelectedIcon from '../assets/favorite_selected.svg';
@@ -8,23 +8,74 @@ import { ImageContext } from '../context/imageContext';
 
 import type { Image } from '../types/Image';
 import { TAB_IDS } from '../types/TabIds';
+import { devices } from '../utilities/devices';
 
 import { convertByteToMB, formatDate } from '../utilities/utils';
+
+const modalStyles = css`
+  position: fixed;
+  top: 0;
+  left: 0;
+  max-width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+  overflow-y: scroll;
+`;
+
+const closeButtonStyles = css`
+  display: block;
+  float: right;
+  margin-bottom: 1rem;
+  background-color: white;
+  border: none;
+  font-size: 16px;
+`;
 
 const DetailsContainer = styled.div`
   max-width: 30%;
   padding: 2rem;
   border-left: 1px solid rgba(203, 213, 225, 0.5);
-  height: 100vh;
   background-color: white;
   box-sizing: fit-content;
   font-size: 12px;
+
+  @media ${devices.mobile} {
+    ${modalStyles}
+  }
+
+  @media ${devices.tablet} {
+    ${modalStyles}
+  }
+`;
+
+const CloseButton = styled.button`
+  display: none;
+
+  @media ${devices.mobile} {
+    ${closeButtonStyles}
+  }
+
+  @media ${devices.tablet} {
+    ${closeButtonStyles}
+  }
 `;
 
 const Image = styled.img`
   width: 100%;
   height: 300px;
   border-radius: 10px;
+
+  @media ${devices.laptop} {
+    height: 200px;
+  }
+
+  @media ${devices.tablet} {
+    height: 320px;
+  }
+`;
+
+const ImageName = styled.p`
+  font-size: 14px;
 `;
 
 const ImageBrief = styled.div`
@@ -35,18 +86,23 @@ const ImageBrief = styled.div`
 `;
 
 const ImageSize = styled.div`
-  color: grey;
+  color: #64748b;
 `;
 const FavoriteIcon = styled.img`
   width: 5%;
   height: 5%;
 `;
 
+const Section = styled.section`
+  font-size: 14px;
+  padding-top: 2.5rem;
+`;
+
 const DescriptionSection = styled.section`
   margin-top: 2.5rem;
 `;
 const DescriptionDetails = styled.p`
-  color: #cbd5e1;
+  color: #64748b;
   text-align: left;
   line-height: 22px;
 `;
@@ -54,9 +110,10 @@ const DescriptionDetails = styled.p`
 const Delete = styled.button`
   width: 100%;
   height: 2rem;
-  border: 1px solid lightgrey;
+  border: 1px solid #cbd5e1;
   border-radius: 5px;
   background-color: white;
+  margin-top: 1rem;
 `;
 
 export function ImageDetails() {
@@ -91,12 +148,17 @@ export function ImageDetails() {
     setSelectedImage(undefined);
   };
 
+  const closeModal = () => {
+    setSelectedImage(undefined);
+  };
+
   return (
     <DetailsContainer>
+      <CloseButton onClick={closeModal}>X</CloseButton>
       <Image src={url} alt={filename} />
       <div>
         <ImageBrief>
-          <p>{filename}</p>
+          <ImageName>{filename}</ImageName>
           <FavoriteIcon
             src={favorited ? FavoriteSelectedIcon : FavoriteNotSelectedIcon}
             alt={favorited ? 'favorited' : 'not favorited'}
@@ -107,7 +169,7 @@ export function ImageDetails() {
         <ImageSize>{convertByteToMB(sizeInBytes)} MB</ImageSize>
       </div>
       <div>
-        <h3>Information</h3>
+        <Section>Information</Section>
         <ImageInformation label="Uploaded by" value={uploadedBy} />
         <ImageInformation label="Created" value={formatDate(createdAt)} />
         <ImageInformation label="Last Modified" value={formatDate(updatedAt)} />

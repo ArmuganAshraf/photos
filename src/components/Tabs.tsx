@@ -3,10 +3,17 @@ import styled from 'styled-components';
 import { ImageContext } from '../context/imageContext';
 
 import { Tab } from '../types/Tab';
+import { devices } from '../utilities/devices';
 
 const TabsContainer = styled.div`
   display: flex;
   border-bottom: 1px solid rgba(203, 213, 225, 0.5);
+  width: 96%;
+
+  @media ${devices.mobile} {
+    justify-content: space-around;
+    width: 100%;
+  }
 `;
 
 const TabButton = styled.button<{ selected: boolean }>`

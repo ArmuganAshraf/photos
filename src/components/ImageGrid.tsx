@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { ImageContext } from '../context/imageContext';
 
 import type { Image } from '../types/Image';
+import { devices } from '../utilities/devices';
 
 import { convertByteToMB } from '../utilities/utils';
 
@@ -12,13 +13,31 @@ const ImagesContainer = styled.div`
   justify-content: flex-start;
   margin-left: 0;
   margin-top: 1rem;
+
+  @media ${devices.mobile} {
+    justify-content: center;
+    padding-right: 0;
+  }
 `;
 
 const ImageCard = styled.div`
-  width: 5rem;
+  width: 5.5rem;
   height: 7rem;
   font-size: 12px;
   margin: 0 4rem 2rem 0;
+
+  @media ${devices.laptop} {
+    width: 5.8rem;
+  }
+
+  @media ${devices.mobile} {
+    width: 7rem;
+    margin: 0 2rem 2rem 2rem;
+  }
+
+  @media ${devices.tablet} {
+    width: 7.5rem;
+  }
 `;
 
 const Images = styled.img<{ selected: boolean }>`
@@ -39,7 +58,7 @@ const ImageTitle = styled.h5`
 `;
 
 const ImageSize = styled.h5`
-  color: grey;
+  color: #64748b;
   margin-top: 5px;
 `;
 

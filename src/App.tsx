@@ -5,6 +5,7 @@ import { useFetch } from './hooks/useFetch';
 
 import { Image_URL } from './config/config';
 import { PhotosWrapper } from './views/PhotosWrapper';
+import { devices } from './utilities/devices';
 
 const Page = styled.div`
   background-color: #f7fafc;
@@ -15,6 +16,10 @@ const Page = styled.div`
 const MainContainer = styled.div`
   display: flex;
   margin-left: 2rem;
+
+  @media ${devices.mobile} {
+    margin: 0;
+  }
 `;
 
 function App() {
