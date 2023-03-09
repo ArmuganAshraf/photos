@@ -4,7 +4,7 @@ import React from 'react';
 import { ImageContextType } from '../../types/ImageContextType';
 
 import { ImageGridWrapper } from '../ImageGridWrapper';
-import { initialContextValue, renderWithProviders } from '../../config/mockImageContext';
+import { initialContextValue, renderWithProviders } from '../../utilities/testUtils/mockImageContext';
 
 describe('Image Grid Wrapper', () => {
   test('renders image grid desc sorted by created date when recently added tab is selected', () => {

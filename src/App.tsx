@@ -7,13 +7,14 @@ import { Image_URL } from './config/config';
 import { PhotosWrapper } from './views/PhotosWrapper';
 
 const Page = styled.div`
-  background-color: #e8effa;
+  background-color: #f7fafc;
+  color: #1e293b;
   margin: 0;
 `;
 
 const MainContainer = styled.div`
-  margin: 1rem 1rem 1rem 2rem;
   display: flex;
+  margin-left: 2rem;
 `;
 
 function App() {

@@ -3,9 +3,9 @@ import React from 'react';
 
 import { ImageContextType } from '../../types/ImageContextType';
 import userEvent from '@testing-library/user-event';
-import { listOfMockTabs } from '../../mocks/mockTabData';
+import { listOfMockTabs } from '../../utilities/testUtils/mocks/mockTabData';
 import { Tabs } from '../Tabs';
-import { initialContextValue, renderWithProviders } from '../../config/mockImageContext';
+import { initialContextValue, renderWithProviders } from '../../utilities/testUtils/mockImageContext';
 
 describe('Tabs', () => {
   test('renders tabs', () => {
@@ -37,7 +37,7 @@ describe('Tabs', () => {
 
     const actualTab = screen.getByText(/Recently Addded/);
     expect(actualTab).toHaveStyle(`
-      border-bottom: cornflowerblue 2px solid
+      border-bottom: 1px solid #4f45e4
     `);
   });
 

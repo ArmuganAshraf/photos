@@ -17,6 +17,11 @@ const Container = styled.div`
   justify-content: space-between;
 `;
 
+const Header = styled.h1`
+  font-size: 22px;
+  padding: 1rem 0;
+`;
+
 const PhotosSection = styled.div`
   width: 100%;
 `;
@@ -56,7 +61,7 @@ export function PhotosWrapper({ data: imageData }: PhotosWrapperPropsTypes) {
     >
       <Container>
         <PhotosSection>
-          <h1>Photos</h1>
+          <Header>Photos</Header>
           <Tabs tabs={listOfTabs} />
           <ImageGridWrapper />
         </PhotosSection>

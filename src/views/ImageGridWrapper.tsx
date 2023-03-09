@@ -9,7 +9,7 @@ import { TAB_IDS } from '../types/TabIds';
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
 `;
 
 export function ImageGridWrapper() {

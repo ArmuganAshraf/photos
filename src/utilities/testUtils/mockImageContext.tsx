@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react';
 import React, { ReactElement } from 'react';
-import { ImageContext } from '../context/imageContext';
-import { mockImageData } from '../mocks/mockImageData';
-import { ImageContextType } from '../types/ImageContextType';
+import { ImageContext } from '../../context/imageContext';
+import { mockImageData } from './mocks/mockImageData';
+import { ImageContextType } from '../../types/ImageContextType';
 
 export const initialContextValue: ImageContextType = {
   images: mockImageData,

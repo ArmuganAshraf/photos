@@ -1,4 +1,4 @@
-import { Tab } from '../types/Tab';
+import { Tab } from '../../../types/Tab';
 
 export const listOfMockTabs: Tab[] = [
   {

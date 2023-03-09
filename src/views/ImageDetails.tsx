@@ -9,12 +9,12 @@ import { ImageContext } from '../context/imageContext';
 import type { Image } from '../types/Image';
 import { TAB_IDS } from '../types/TabIds';
 
-import { convertByteToMB, formatDate } from '../utils/utils';
+import { convertByteToMB, formatDate } from '../utilities/utils';
 
 const DetailsContainer = styled.div`
   max-width: 30%;
-  padding: 1rem 2rem;
-  border-left: 1px solid lightgrey;
+  padding: 2rem;
+  border-left: 1px solid rgba(203, 213, 225, 0.5);
   height: 100vh;
   background-color: white;
   box-sizing: fit-content;
@@ -46,7 +46,7 @@ const DescriptionSection = styled.section`
   margin-top: 2.5rem;
 `;
 const DescriptionDetails = styled.p`
-  color: grey;
+  color: #cbd5e1;
   text-align: left;
   line-height: 22px;
 `;

@@ -6,14 +6,16 @@ import { Tab } from '../types/Tab';
 
 const TabsContainer = styled.div`
   display: flex;
-  border-bottom: 1px solid lightgrey;
+  border-bottom: 1px solid rgba(203, 213, 225, 0.5);
 `;
 
 const TabButton = styled.button<{ selected: boolean }>`
   border: none;
-  background-color: #e8effa;
-  padding: 0 2rem 1rem 0;
-  border-bottom: ${(props) => (props.selected ? 'cornflowerblue 2px solid' : 'none')};
+  background-color: #f7fafc;
+  padding: 0 0 1rem 0;
+  margin-right: 2rem;
+  border-bottom: ${(props) => (props.selected ? '#4f45e4 1px solid' : 'none')};
+  color: ${(props) => (props.selected ? '#4f45e4' : '#1e293b')};
 `;
 
 type TabsPropsTypes = {

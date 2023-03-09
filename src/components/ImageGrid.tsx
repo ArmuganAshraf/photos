@@ -4,7 +4,7 @@ import { ImageContext } from '../context/imageContext';
 
 import type { Image } from '../types/Image';
 
-import { convertByteToMB } from '../utils/utils';
+import { convertByteToMB } from '../utilities/utils';
 
 const ImagesContainer = styled.div`
   display: flex;

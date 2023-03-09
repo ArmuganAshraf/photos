@@ -4,9 +4,9 @@ import React from 'react';
 import { ImageGrid } from '../ImageGrid';
 import { Image } from '../../types/Image';
 import { ImageContextType } from '../../types/ImageContextType';
-import { mockImageData } from '../../mocks/mockImageData';
+import { mockImageData } from '../../utilities/testUtils/mocks/mockImageData';
 import userEvent from '@testing-library/user-event';
-import { initialContextValue, renderWithProviders } from '../../config/mockImageContext';
+import { initialContextValue, renderWithProviders } from '../../utilities/testUtils/mockImageContext';
 
 describe('ImageGrid', () => {
   test('renders list of images', async () => {
