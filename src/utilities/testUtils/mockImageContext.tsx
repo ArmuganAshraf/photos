@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 
 import { ImageContext } from '../../context/imageContext';
 import { mockImageData } from './mockData/mockImageData';
@@ -14,8 +14,14 @@ export const initialContextValue: ImageContextType = {
   setSelectedTab: jest.fn(),
 };
 
+type WrapperProps = {
+  children: ReactNode;
+};
+
 export const renderWithProviders = (component: ReactElement, value: ImageContextType = initialContextValue) => {
-  const wrapper = ({ children }: any) => <ImageContext.Provider value={value}>{children}</ImageContext.Provider>;
+  const wrapper = ({ children }: WrapperProps) => (
+    <ImageContext.Provider value={value}>{children}</ImageContext.Provider>
+  );
 
   return render(component, { wrapper: wrapper });
 };
