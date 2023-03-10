@@ -106,12 +106,14 @@ const TableSection = styled.table`
   width: 100%;
 `;
 
-const TableCaption = styled.caption`
+const TableCaption = styled.thead`
   text-align: start;
   border-bottom: 1px solid rgba(203, 213, 225, 0.5);
   margin-top: 2.5rem;
   padding-bottom: 1rem;
 `;
+
+const TableBody = styled.tbody``;
 
 const Section = styled.section`
   font-size: 18px;
@@ -188,11 +190,13 @@ export function ImageDetails() {
       </div>
       <TableSection>
         <TableCaption>Information</TableCaption>
-        <ImageInformation label="Uploaded by" value={uploadedBy} />
-        <ImageInformation label="Created" value={formatDate(createdAt)} />
-        <ImageInformation label="Last Modified" value={formatDate(updatedAt)} />
-        <ImageInformation label="Dimensions" value={`${dimensions.width} x ${dimensions.height}`} />
-        <ImageInformation label="Resolution" value={`${resolution.width} x ${resolution.height}`} />
+        <TableBody>
+          <ImageInformation label="Uploaded by" value={uploadedBy} />
+          <ImageInformation label="Created" value={formatDate(createdAt)} />
+          <ImageInformation label="Last Modified" value={formatDate(updatedAt)} />
+          <ImageInformation label="Dimensions" value={`${dimensions.width} x ${dimensions.height}`} />
+          <ImageInformation label="Resolution" value={`${resolution.width} x ${resolution.height}`} />
+        </TableBody>
       </TableSection>
       {description && (
         <Section>

@@ -1,11 +1,11 @@
-import { screen } from '@testing-library/react';
 import React from 'react';
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import { ImageContextType } from '../../types/ImageContextType';
 
 import { ImageDetails } from '../ImageDetails';
-import { mockImageData } from '../../utilities/testUtils/mocks/mockImageData';
-import userEvent from '@testing-library/user-event';
+import { mockImageData } from '../../utilities/testUtils/mockData/mockImageData';
 import { initialContextValue, renderWithProviders } from '../../utilities/testUtils/mockImageContext';
 
 describe('ImageDetails', () => {
